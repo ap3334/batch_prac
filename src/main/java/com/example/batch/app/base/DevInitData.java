@@ -2,11 +2,14 @@ package com.example.batch.app.base;
 
 import com.example.batch.app.member.entity.Member;
 import com.example.batch.app.member.service.MemberService;
+import com.example.batch.app.product.entity.ProductOption;
 import com.example.batch.app.product.service.ProductService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+
+import java.util.Arrays;
 
 @Configuration
 @Profile("dev")
@@ -22,8 +25,8 @@ public class DevInitData {
             Member member3 = memberService.join("user3", password, "user3@test.com");
             Member member4 = memberService.join("user4", password, "user4@test.com");
 
-            productService.create("단가라 OPS", 68000, "청평화 A-1-15");
-            productService.create("쉬폰 OPS", 72000, "청평화 A-1-15");
+            productService.create("단가라 OPS", 68000, "청평화 A-1-15", Arrays.asList(new ProductOption("RED", "44"), new ProductOption("RED", "55"), new ProductOption("BLUE", "44"), new ProductOption("BLUE", "55")));
+            productService.create("쉬폰 OPS", 72000, "청평화 A-1-15", Arrays.asList(new ProductOption("WHITE", "44"), new ProductOption("WHITE", "55"), new ProductOption("BLACK", "44"), new ProductOption("BLACK", "55")));
 
         };
     }
