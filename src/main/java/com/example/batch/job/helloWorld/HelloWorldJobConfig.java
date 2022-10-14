@@ -27,6 +27,7 @@ public class HelloWorldJobConfig {
         return jobBuilderFactory.get("helloWorldJob")
                 .incrementer(new RunIdIncrementer())
                 .start(helloWorldStep1())
+                .next(helloWorldStep2())
                 .build();
 
     }
@@ -36,22 +37,44 @@ public class HelloWorldJobConfig {
     public Step helloWorldStep1() {
 
         return stepBuilderFactory.get("helloWorldStep1")
-                .tasklet(helloWorldTasklet())
+                .tasklet(helloWorldStep1Tasklet())
                 .build();
 
     }
 
     @Bean
     @StepScope
-    public Tasklet helloWorldTasklet() {
+    public Tasklet helloWorldStep1Tasklet() {
 
         return (contribution, chunkContext) -> {
 
-            System.out.println("Hello World!!");
+            System.out.println("Hello World Tasklet1!!");
 
             return RepeatStatus.FINISHED;
 
         };
     }
 
+    @Bean
+    @JobScope
+    public Step helloWorldStep2() {
+
+        return stepBuilderFactory.get("helloWorldStep2")
+                .tasklet(helloWorldStep2Tasklet())
+                .build();
+
+    }
+
+    @Bean
+    @StepScope
+    public Tasklet helloWorldStep2Tasklet() {
+
+        return (contribution, chunkContext) -> {
+
+            System.out.println("Hello World Tasklet2!!");
+
+            return RepeatStatus.FINISHED;
+
+        };
+    }
 }
