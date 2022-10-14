@@ -73,6 +73,10 @@ public class HelloWorldJobConfig {
 
             System.out.println("Hello World Tasklet2!!");
 
+            if (true) {
+                throw new Exception("실패 : Hello World Tasklet2");
+            }
+
             return RepeatStatus.FINISHED;
 
         };
