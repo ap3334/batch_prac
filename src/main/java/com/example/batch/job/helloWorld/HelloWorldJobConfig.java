@@ -25,7 +25,7 @@ public class HelloWorldJobConfig {
     public Job helloWorldJob() {
 
         return jobBuilderFactory.get("helloWorldJob")
-                .incrementer(new RunIdIncrementer())
+//                .incrementer(new RunIdIncrementer())
                 .start(helloWorldStep1())
                 .next(helloWorldStep2())
                 .build();
