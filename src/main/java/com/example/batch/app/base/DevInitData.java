@@ -1,7 +1,9 @@
 package com.example.batch.app.base;
 
+import com.example.batch.app.cart.service.CartService;
 import com.example.batch.app.member.entity.Member;
 import com.example.batch.app.member.service.MemberService;
+import com.example.batch.app.product.entity.Product;
 import com.example.batch.app.product.entity.ProductOption;
 import com.example.batch.app.product.service.ProductService;
 import org.springframework.boot.CommandLineRunner;
@@ -16,7 +18,7 @@ import java.util.Arrays;
 public class DevInitData {
 
     @Bean
-    public CommandLineRunner initData(MemberService memberService, ProductService productService) {
+    public CommandLineRunner initData(MemberService memberService, ProductService productService, CartService cartService) {
         return args -> {
 
             String password = "{noop}1234";
@@ -25,8 +27,15 @@ public class DevInitData {
             Member member3 = memberService.join("user3", password, "user3@test.com");
             Member member4 = memberService.join("user4", password, "user4@test.com");
 
-            productService.create("단가라 OPS", 68000, "청평화 A-1-15", Arrays.asList(new ProductOption("RED", "44"), new ProductOption("RED", "55"), new ProductOption("BLUE", "44"), new ProductOption("BLUE", "55")));
-            productService.create("쉬폰 OPS", 72000, "청평화 A-1-15", Arrays.asList(new ProductOption("WHITE", "44"), new ProductOption("WHITE", "55"), new ProductOption("BLACK", "44"), new ProductOption("BLACK", "55")));
+            Product product1 = productService.create("단가라 OPS", 68000, "청평화 A-1-15", Arrays.asList(new ProductOption("RED", "44"), new ProductOption("RED", "55"), new ProductOption("BLUE", "44"), new ProductOption("BLUE", "55")));
+            Product product2 = productService.create("쉬폰 OPS", 72000, "청평화 A-1-15", Arrays.asList(new ProductOption("WHITE", "44"), new ProductOption("WHITE", "55"), new ProductOption("BLACK", "44"), new ProductOption("BLACK", "55")));
+
+            ProductOption productOption__RED_44 = product1.getProductOptions().get(0);
+            ProductOption productOption__BLUE_44 = product1.getProductOptions().get(2);
+
+            cartService.addItem(member1, productOption__RED_44, 1);
+            cartService.addItem(member1, productOption__RED_44, 2);
+            cartService.addItem(member1, productOption__BLUE_44, 1);
 
         };
     }
