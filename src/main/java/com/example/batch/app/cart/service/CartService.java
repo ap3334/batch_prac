@@ -7,6 +7,8 @@ import com.example.batch.app.product.entity.ProductOption;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CartService {
@@ -33,5 +35,15 @@ public class CartService {
         cartItemRepository.save(cartItem);
 
         return cartItem;
+    }
+
+    public List<CartItem> getItemsByMember(Member member) {
+
+        return cartItemRepository.findAllByMemberId(member.getId());
+
+    }
+
+    public void deleteItem(CartItem cartItem) {
+        cartItemRepository.delete(cartItem);
     }
 }

@@ -3,6 +3,7 @@ package com.example.batch.app.base;
 import com.example.batch.app.cart.service.CartService;
 import com.example.batch.app.member.entity.Member;
 import com.example.batch.app.member.service.MemberService;
+import com.example.batch.app.order.service.OrderService;
 import com.example.batch.app.product.entity.Product;
 import com.example.batch.app.product.entity.ProductOption;
 import com.example.batch.app.product.service.ProductService;
@@ -18,7 +19,7 @@ import java.util.Arrays;
 public class DevInitData {
 
     @Bean
-    public CommandLineRunner initData(MemberService memberService, ProductService productService, CartService cartService) {
+    public CommandLineRunner initData(MemberService memberService, ProductService productService, CartService cartService, OrderService orderService) {
         return args -> {
 
             String password = "{noop}1234";
@@ -36,6 +37,8 @@ public class DevInitData {
             cartService.addItem(member1, productOption__RED_44, 1);
             cartService.addItem(member1, productOption__RED_44, 2);
             cartService.addItem(member1, productOption__BLUE_44, 1);
+
+            orderService.createFromCart(member1);
 
         };
     }
