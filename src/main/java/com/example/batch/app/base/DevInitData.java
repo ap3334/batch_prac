@@ -28,6 +28,13 @@ public class DevInitData {
             Member member3 = memberService.join("user3", password, "user3@test.com");
             Member member4 = memberService.join("user4", password, "user4@test.com");
 
+            memberService.addCash(member1, 10_000);
+            memberService.addCash(member1, 20_000);
+
+            memberService.addCash(member1, -5_000);
+
+            long restCash = memberService.getRestCash(member1);
+
             Product product1 = productService.create("단가라 OPS", 68000, 45000, "청평화 A-1-15", Arrays.asList(new ProductOption("RED", "44"), new ProductOption("RED", "55"), new ProductOption("BLUE", "44"), new ProductOption("BLUE", "55")));
             Product product2 = productService.create("쉬폰 OPS", 72000, 55000, "청평화 A-1-15", Arrays.asList(new ProductOption("WHITE", "44"), new ProductOption("WHITE", "55"), new ProductOption("BLACK", "44"), new ProductOption("BLACK", "55")));
 
