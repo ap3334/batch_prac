@@ -36,6 +36,16 @@ public class OrderItem extends BaseEntity {
 
     private int wholesalePrice;
 
+    private int payPrice;
+
+    private int refundPrice;
+
+    private int refundQuantity;
+
+    private int pgFee;
+
+    private boolean isPaid;
+
     public OrderItem(ProductOption productOption, int quantity) {
         this.productOption = productOption;
         this.quantity = quantity;
