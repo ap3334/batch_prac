@@ -3,6 +3,7 @@ package com.example.batch.app.order.service;
 import com.example.batch.app.cart.entity.CartItem;
 import com.example.batch.app.cart.service.CartService;
 import com.example.batch.app.member.entity.Member;
+import com.example.batch.app.member.service.MemberService;
 import com.example.batch.app.order.entity.Order;
 import com.example.batch.app.order.entity.OrderItem;
 import com.example.batch.app.order.repository.OrderRepository;
@@ -22,6 +23,9 @@ public class OrderService {
     private final OrderRepository orderRepository;
 
     private final CartService cartService;
+
+    private final MemberService memberService;
+
 
     @Transactional
     public Order createFromCart(Member member) {
@@ -59,5 +63,27 @@ public class OrderService {
 
         return order;
     }
+
+    @Transactional
+    public void payByRestCashOnly(Order order) {
+
+        Member orderer = order.getMember();
+
+        long restCash = orderer.getRestCash();
+
+        int payPrice = order.calculatePayPrice();
+
+        if (payPrice > restCash) {
+            throw new RuntimeException("예치금이 부족합니다.");
+        }
+
+
+        memberService.addCash(orderer, payPrice * -1, "주문결제__예치금결제");
+
+        order.setPaymentDone();
+
+        orderRepository.save(order);
+    }
+
 
 }

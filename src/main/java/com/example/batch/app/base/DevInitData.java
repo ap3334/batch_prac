@@ -3,6 +3,7 @@ package com.example.batch.app.base;
 import com.example.batch.app.cart.service.CartService;
 import com.example.batch.app.member.entity.Member;
 import com.example.batch.app.member.service.MemberService;
+import com.example.batch.app.order.entity.Order;
 import com.example.batch.app.order.service.OrderService;
 import com.example.batch.app.product.entity.Product;
 import com.example.batch.app.product.entity.ProductOption;
@@ -33,6 +34,8 @@ public class DevInitData {
 
             memberService.addCash(member1, -5_000, "출금__일반");
 
+            memberService.addCash(member1, 300_000, "충전__무통장입금");
+
             long restCash = memberService.getRestCash(member1);
 
             Product product1 = productService.create("단가라 OPS", 68000, 45000, "청평화 A-1-15", Arrays.asList(new ProductOption("RED", "44"), new ProductOption("RED", "55"), new ProductOption("BLUE", "44"), new ProductOption("BLUE", "55")));
@@ -45,8 +48,11 @@ public class DevInitData {
             cartService.addItem(member1, productOption__RED_44, 2);
             cartService.addItem(member1, productOption__BLUE_44, 1);
 
-            orderService.createFromCart(member1);
+            Order order1 = orderService.createFromCart(member1);
 
+            int order1PayPrice = order1.calculatePayPrice();
+
+            orderService.payByRestCashOnly(order1);
         };
     }
 
