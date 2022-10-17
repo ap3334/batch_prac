@@ -66,4 +66,12 @@ public class OrderItem extends BaseEntity {
         this.isPaid = true;
 
     }
+
+    public void setRefundDone() {
+
+        if (refundQuantity == quantity) return;
+
+        this.refundQuantity = quantity;
+        this.refundPrice = payPrice;
+    }
 }

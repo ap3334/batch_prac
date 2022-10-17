@@ -50,8 +50,6 @@ public class DevInitData {
 
             Order order1 = orderService.createFromCart(member1);
 
-            int order1PayPrice = order1.calculatePayPrice();
-
             orderService.payByRestCashOnly(order1);
 
             ProductOption product2Option__BLACK_44 = product1.getProductOptions().get(0);
@@ -67,6 +65,7 @@ public class DevInitData {
 
             orderService.payByRestCashOnly(order2);
 
+            orderService.refund(order2);
 
         };
     }
