@@ -20,9 +20,15 @@ import java.util.List;
 @Profile("dev")
 public class DevInitData {
 
+    private boolean initDataDone = false;
+
     @Bean
     public CommandLineRunner initData(MemberService memberService, ProductService productService, CartService cartService, OrderService orderService) {
         return args -> {
+
+            if (initDataDone) return;
+
+            initDataDone = true;
 
             class Helper {
 
