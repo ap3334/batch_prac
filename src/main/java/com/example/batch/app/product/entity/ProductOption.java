@@ -29,6 +29,8 @@ public class ProductOption extends BaseEntity {
 
     private int price;
 
+    private int salePrice;
+
     private int wholesalePrice;
 
     @ManyToOne(fetch = LAZY)

@@ -24,6 +24,8 @@ public class Product extends BaseEntity {
 
     private int price;
 
+    private int salePrice;
+
     private int wholesalePrice;
 
     private String name;
@@ -39,6 +41,7 @@ public class Product extends BaseEntity {
     public void addOption(ProductOption option) {
         option.setProduct(this);
         option.setPrice(getPrice());
+        option.setSalePrice(getSalePrice());
         option.setWholesalePrice(getWholesalePrice());
 
         productOptions.add(option);
