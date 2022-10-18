@@ -44,6 +44,12 @@ public class RebateOrderItem extends BaseEntity {
     private int refundQuantity;
     private boolean isPaid;
 
+    private String productName;
+    private String productOptionColor;
+    private String productOptionSize;
+    private String productOptionDisplayColor;
+    private String productOptionDisplaySize;
+
     public RebateOrderItem(OrderItem orderItem) {
         this.orderItem = orderItem;
         order = orderItem.getOrder();
@@ -53,34 +59,17 @@ public class RebateOrderItem extends BaseEntity {
         salePrice = orderItem.getSalePrice();
         wholesalePrice = orderItem.getWholesalePrice();
         pgFee = orderItem.getPgFee();
-        payPrice = orderItem.getPrice();
+        payPrice = orderItem.getPayPrice();
         refundPrice = orderItem.getRefundPrice();
         refundQuantity = orderItem.getRefundQuantity();
         isPaid = orderItem.isPaid();
+
+        productName = orderItem.getProductOption().getProduct().getName();
+
+        productOptionColor = orderItem.getProductOption().getColor();
+        productOptionSize = orderItem.getProductOption().getSize();
+        productOptionDisplayColor = orderItem.getProductOption().getDisplayColor();
+        productOptionDisplaySize = orderItem.getProductOption().getDisplaySize();
     }
 
-    public RebateOrderItem(ProductOption productOption, int quantity) {
-        this.productOption = productOption;
-        this.quantity = quantity;
-        this.price = productOption.getPrice();
-        this.salePrice = productOption.getSalePrice();
-        this.wholesalePrice = productOption.getWholesalePrice();
-    }
-
-    public int calculatePayPrice() {
-        return salePrice * quantity;
-    }
-
-    public void setPaymentDone() {
-        this.pgFee = 0;
-        this.payPrice = calculatePayPrice();
-        this.isPaid = true;
-    }
-
-    public void setRefundDone() {
-        if (refundQuantity == quantity) return;
-
-        this.refundQuantity = quantity;
-        this.refundPrice = payPrice;
-    }
 }
