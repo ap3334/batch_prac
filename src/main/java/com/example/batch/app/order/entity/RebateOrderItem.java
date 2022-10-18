@@ -47,10 +47,14 @@ public class RebateOrderItem extends BaseEntity {
     private boolean isPaid;
 
     private String productName;
-    private String productOptionColor;
-    private String productOptionSize;
-    private String productOptionDisplayColor;
-    private String productOptionDisplaySize;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "color", column = @Column(name = "product_option_color")),
+            @AttributeOverride(name = "size", column = @Column(name = "product_option_size")),
+            @AttributeOverride(name = "displayColor", column = @Column(name = "product_option_display_color")),
+            @AttributeOverride(name = "displaySize", column = @Column(name = "product_option_display_size"))
+    })
+    private RebateOrderItem.EmbProductOption embProductOption;
 
     private LocalDateTime orderItemCreateDate;
 
@@ -70,12 +74,25 @@ public class RebateOrderItem extends BaseEntity {
 
         productName = orderItem.getProductOption().getProduct().getName();
 
-        productOptionColor = orderItem.getProductOption().getColor();
-        productOptionSize = orderItem.getProductOption().getSize();
-        productOptionDisplayColor = orderItem.getProductOption().getDisplayColor();
-        productOptionDisplaySize = orderItem.getProductOption().getDisplaySize();
+        embProductOption = new EmbProductOption(orderItem.getProductOption());
 
         orderItemCreateDate = orderItem.getCreateDate();
+    }
+
+    @Embeddable
+    @NoArgsConstructor
+    public static class EmbProductOption {
+        private String color;
+        private String size;
+        private String displayColor;
+        private String displaySize;
+
+        public EmbProductOption(ProductOption productOption) {
+            color = productOption.getColor();
+            size = productOption.getSize();
+            displayColor = productOption.getDisplayColor();
+            displaySize = productOption.getDisplaySize();
+        }
     }
 
 }
