@@ -46,6 +46,8 @@ public class RebateOrderItem extends BaseEntity {
     private int refundQuantity;
     private boolean isPaid;
 
+    private LocalDateTime payDate;
+
     private String productName;
     @Embedded
     @AttributeOverrides({
@@ -71,6 +73,7 @@ public class RebateOrderItem extends BaseEntity {
         refundPrice = orderItem.getRefundPrice();
         refundQuantity = orderItem.getRefundQuantity();
         isPaid = orderItem.isPaid();
+        payDate = orderItem.getPayDate();
 
         productName = orderItem.getProductOption().getProduct().getName();
 
